@@ -48,7 +48,6 @@ func (b *s3Backend) ListBuckets(ctx context.Context) ([]gofakes3.BucketInfo, err
 		return nil, err
 	}
 	var response []gofakes3.BucketInfo
-	// ctx := context.Background()
 	for _, b := range buckets {
 		node, _ := fs.Get(ctx, b.Path, &fs.GetArgs{})
 		response = append(response, gofakes3.BucketInfo{
@@ -98,7 +97,6 @@ func (b *s3Backend) ListBucket(ctx context.Context, bucketName string, prefix *g
 //
 // Note that the metadata is not supported yet.
 func (b *s3Backend) HeadObject(ctx context.Context, bucketName, objectName string) (*gofakes3.Object, error) {
-	// ctx := context.Background()
 	bucket, err := getBucketByName(bucketName)
 	if err != nil {
 		return nil, err
@@ -142,7 +140,6 @@ func (b *s3Backend) HeadObject(ctx context.Context, bucketName, objectName strin
 
 // GetObject fetchs the object from the filesystem.
 func (b *s3Backend) GetObject(ctx context.Context, bucketName, objectName string, rangeRequest *gofakes3.ObjectRangeRequest) (obj *gofakes3.Object, err error) {
-	// ctx := context.Background()
 	bucket, err := getBucketByName(bucketName)
 	if err != nil {
 		return nil, err
@@ -262,7 +259,6 @@ func (b *s3Backend) PutObject(
 	meta map[string]string,
 	input io.Reader, size int64,
 ) (result gofakes3.PutObjectResult, err error) {
-	// ctx := context.Background()
 	bucket, err := getBucketByName(bucketName)
 	if err != nil {
 		return result, err
@@ -342,7 +338,6 @@ func (b *s3Backend) DeleteObject(ctx context.Context, bucketName, objectName str
 
 // deleteObject deletes the object from the filesystem.
 func (b *s3Backend) deleteObject(ctx context.Context, bucketName, objectName string) error {
-	// ctx := context.Background()
 	bucket, err := getBucketByName(bucketName)
 	if err != nil {
 		return err
@@ -392,7 +387,6 @@ func (b *s3Backend) CopyObject(ctx context.Context, srcBucket, srcKey, dstBucket
 		return result, nil
 	}
 
-	// ctx := context.Background()
 	srcB, err := getBucketByName(srcBucket)
 	if err != nil {
 		return result, err
